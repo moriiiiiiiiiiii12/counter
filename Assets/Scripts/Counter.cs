@@ -10,7 +10,7 @@ public class Counter : MonoBehaviour
     [SerializeField] private float _timeStep = 0.5f;
     [SerializeField, Min(0)] private float _value = 0f;
 
-    private Coroutine _ñoroutine;
+    private Coroutine _coroutine;
 
     public bool IsActive { get; private set; } = false;
     public float Value => _value;
@@ -30,7 +30,7 @@ public class Counter : MonoBehaviour
 
     public void Switching()
     {
-        if (_ñoroutine == null)
+        if (_coroutine == null)
         {
             Enable();
         }
@@ -44,7 +44,7 @@ public class Counter : MonoBehaviour
     {
         IsActive = true;
 
-        _ñoroutine = StartCoroutine(Go());
+        _coroutine = StartCoroutine(Go());
 
         StateChanged?.Invoke();
     }
@@ -53,9 +53,9 @@ public class Counter : MonoBehaviour
     {
         IsActive = false;
 
-        StopCoroutine(_ñoroutine);
+        StopCoroutine(_coroutine);
 
-        _ñoroutine = null;
+        _coroutine = null;
 
         StateChanged?.Invoke();
     }
