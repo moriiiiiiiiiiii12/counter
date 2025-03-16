@@ -18,29 +18,39 @@ public class Counter : MonoBehaviour
 
     public void Switching()
     {
-        if (_countCoroutine == null) 
+        if (_countCoroutine == null)
         {
-            Debug.Log("Считаем");
-            IsCounting = true;
-
-            _countCoroutine = StartCoroutine(StartCount());
-
-            CountingChanged?.Invoke();
+            EnableCounting();
         }
-        else 
+        else
         {
-            Debug.Log("Остановка");
-            IsCounting = false;
-
-            StopCoroutine(_countCoroutine);
-            
-            _countCoroutine = null;
-
-            CountingChanged?.Invoke();
+            DisableCounting();
         }
     }
 
-    private IEnumerator StartCount()
+    private void EnableCounting()
+    {
+        Debug.Log("Считаем");
+        IsCounting = true;
+
+        _countCoroutine = StartCoroutine(GoCounting());
+
+        CountingChanged?.Invoke();
+    }
+
+    private void DisableCounting()
+    {
+        Debug.Log("Остановка");
+        IsCounting = false;
+
+        StopCoroutine(_countCoroutine);
+            
+        _countCoroutine = null;
+
+        CountingChanged?.Invoke();
+    }
+
+    private IEnumerator GoCounting()
     {
         while (IsCounting)
         {
