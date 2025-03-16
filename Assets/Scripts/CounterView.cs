@@ -36,11 +36,11 @@ public class CounterView : MonoBehaviour
     {
         if (_counter.IsCounting == false)
         {
-            _textButton.text = "Включить";
+            _textButton.text = "Р’РєР»СЋС‡РёС‚СЊ";
         }
         else
         {
-            _textButton.text = "Отключить";
+            _textButton.text = "Р’С‹РєР»СЋС‡РёС‚СЊ";
         }
     }
 }

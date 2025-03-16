@@ -20,7 +20,7 @@ public class Counter : MonoBehaviour
     {
         if (_countCoroutine == null) 
         {
-            Debug.Log("Полетело");
+            Debug.Log("РЎС‡РёС‚Р°РµРј");
             IsCounting = true;
 
             _countCoroutine = StartCoroutine(StartCount());
@@ -29,7 +29,7 @@ public class Counter : MonoBehaviour
         }
         else 
         {
-            Debug.Log("Остановка");
+            Debug.Log("РћСЃС‚Р°РЅРѕРІРєР°");
             IsCounting = false;
 
             StopCoroutine(_countCoroutine);
