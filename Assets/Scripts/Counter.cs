@@ -1,63 +1,71 @@
+using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class Counter : MonoBehaviour
 {
-    [SerializeField] private float _countSteps;
+    [SerializeField] private Button _button;
+    [SerializeField] private float _steps;
     [SerializeField] private float _timeStep = 0.5f;
-    [SerializeField, Min(0)] private float _count = 0f;
+    [SerializeField, Min(0)] private float _value = 0f;
 
-    private Coroutine _countCoroutine;
+    private Coroutine _�oroutine;
 
-    public bool IsCounting { get; private set; } = false;
-    public float Count => _count;
+    public bool IsActive { get; private set; } = false;
+    public float Value => _value;
 
-    public event UnityAction CountingChanged;
-    public event UnityAction CountChanged;
+    public event Action StateChanged;
+    public event Action ValueChanged;
+
+    private void OnEnable()
+    {
+        _button.onClick.AddListener(Switching);
+    }
+
+    private void OnDisable()
+    {
+        _button.onClick.RemoveListener(Switching);
+    }
 
     public void Switching()
     {
-        if (_countCoroutine == null)
+        if (_�oroutine == null)
         {
-            EnableCounting();
+            Enable();
         }
         else
         {
-            DisableCounting();
+            Disable();
         }
     }
 
-    private void EnableCounting()
+    private void Enable()
     {
-        Debug.Log("Считаем");
-        IsCounting = true;
+        IsActive = true;
 
-        _countCoroutine = StartCoroutine(GoCounting());
+        _�oroutine = StartCoroutine(Go());
 
-        CountingChanged?.Invoke();
+        StateChanged?.Invoke();
     }
 
-    private void DisableCounting()
+    private void Disable()
     {
-        Debug.Log("Остановка");
-        IsCounting = false;
+        IsActive = false;
 
-        StopCoroutine(_countCoroutine);
-            
-        _countCoroutine = null;
+        StopCoroutine(_�oroutine);
 
-        CountingChanged?.Invoke();
+        _�oroutine = null;
+
+        StateChanged?.Invoke();
     }
 
-    private IEnumerator GoCounting()
+    private IEnumerator Go()
     {
-        while (IsCounting)
+        while (IsActive)
         {
-            _count += _countSteps;
-            CountChanged?.Invoke();
-            
-            Debug.Log(_count.ToString());
+            _value += _steps;
+            ValueChanged?.Invoke();
 
             yield return new WaitForSecondsRealtime(_timeStep);
         }

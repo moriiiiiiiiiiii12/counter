@@ -9,7 +9,7 @@ public class CounterView : MonoBehaviour
 
     private void Start()
     {
-        _text.text = _counter.Count.ToString();
+        _text.text = _counter.Value.ToString();
 
         DisplayStatusButton();
 
@@ -17,24 +17,24 @@ public class CounterView : MonoBehaviour
 
     private void OnEnable()
     {
-        _counter.CountChanged += DisplayCount;
-        _counter.CountingChanged += DisplayStatusButton;
+        _counter.ValueChanged += Display;
+        _counter.StateChanged += DisplayStatusButton;
     }
 
     private void OnDisable()
     {
-        _counter.CountChanged -= DisplayCount;
-        _counter.CountingChanged -= DisplayStatusButton;
+        _counter.ValueChanged -= Display;
+        _counter.StateChanged -= DisplayStatusButton;
     }
 
-    private void DisplayCount()
+    private void Display()
     {
-        _text.text = _counter.Count.ToString();
+        _text.text = _counter.Value.ToString();
     }
 
     private void DisplayStatusButton()
     {
-        if (_counter.IsCounting == false)
+        if (_counter.IsActive == false)
         {
             _textButton.text = "Включить";
         }
